@@ -1,0 +1,15 @@
+#git_login .glyphicon.glyphicon-edit {
+    padding-left: 10px;
+    font-size: .75em;
+}
+
+#git_avatar_url {
+    margin-bottom: 10px;
+    border-radius: 50%;
+}
+#overview .panel-body div {
+    font-weight: bold;
+}
+#overview .panel-body span {
+    font-weight: normal;
+}

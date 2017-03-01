@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+
+    <!-- My custom styles for this app -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!-- <script src="../../assets/js/ie-emulation-modes-warning.js"></script> -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Git Some!</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-3 col-md-2 sidebar">
+                <img id="git_avatar_url" src="img/octocat.svg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                <div id="username" class="input-group">
+                    <input type="text" class="form-control name" name="name" placeholder="Git Username" aria-describedby="sizing-addon1">
+                        <!-- <input type="submit" value="Go"> -->
+                    <button type="button" class="btn btn-default">Go</button>
+                </div>
+                <h4 id="git_login"><a href="#" target="_blank"/></a><span class="glyphicon glyphicon-edit" aria-hidden=true></span></h4>
+                <hr />
+                <ul class="nav nav-sidebar">
+                    <li id="nav-overview" class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+                    <li id="nav-repos"><a href="#">Repos</a></li>
+                    <li id="nav-subscriptions"><a href="#">Subscriptions</a></li>
+                    <li id="nav-followers"><a href="#">Followers</a></li>
+                </ul>
+            </div>
+
+            <div id="details">
+
+                <div id="overview" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    <h1 class="page-header">Overview</h1>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div>Account Type: <span id="git_type"></span></div>
+                            <div>Name: <span id="git_name"></span></div>
+                            <div>Company: <span id="git_company"></span></div>
+                            <div>Blog: <span id="git_blog"></span></div>
+                            <div>Location: <span id="git_location"></span></div>
+                            <div>Email: <span id="git_email"></span></div>
+                            <div>Bio: <span id="git_bio"></span></div>
+                            <div>Public Repos: <span id="git_public_repos"></span></div>
+                            <div>Public Gists: <span id="git_public_gists"></span></div>
+                            <div>Followers: <span id="git_followers"></span></div>
+                            <div>Following: <span id="git_following"></span></div>
+                            <div>Created: <span id="git_created_at"></span></div>
+                            <div>Updated: <span id="git_updated_at"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="repos" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    <h1 class="page-header">Repos</h1>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body"></div>
+                    </div>
+
+                </div>
+
+                <div id="subscriptions" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    <h1 class="page-header">Subscriptions</h1>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body"></div>
+                    </div>
+
+                </div>
+
+                <div id="followers" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    <h1 class="page-header">Followers</h1>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+    </script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <!-- <script src="../../assets/js/vendor/holder.min.js"></script> -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>
