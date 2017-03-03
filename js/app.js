@@ -1,101 +1,104 @@
-var user = 'kurtishouser';
-// var user = 'pravipati';
-
 var baseurl = 'https://api.github.com/users/';
 
+function getJSON(url) {
+  // Return a new promise.
+  return new Promise(function(resolve, reject) {
+    // Do the usual XHR stuff
+    var req = new XMLHttpRequest();
+    req.open('GET', url);
+    req.responseType = "json";
 
-function apicall(url) {
-    var $xhr = $.getJSON(url);
+    req.onload = function() {
+      // This is called even on 404 etc
+      // so check the status
+      if (req.status == 200) {
+        // Resolve the promise with the response text
+        resolve(req.response);
+      }
+      else {
+        // Otherwise reject with the status text
+        // which will hopefully be a meaningful error
+        reject(Error(req.statusText));
+      }
+    };
 
-    console.log('endpoint:', url);
+    // Handle network errors
+    req.onerror = function() {
+      reject(Error("Network Error"));
+    };
 
-    $xhr.done(function(data) {
-        if ($xhr.status !== 200) {
-            return;
-        }
-
-        // console.log("JSON Data", data);
-        $('#git_login a').text(data.login);
-        $('#git_login a').attr('href', data.html_url);
-        $('#git_avatar_url').attr('src', data.avatar_url);
-        $('#git_type').text(data.type);
-        $('#git_name').text(data.name);
-        $('#git_company').text(data.company);
-        $('#git_location').text(data.location);
-        $('#git_email').text(data.email);
-        $('#git_bio').text(data.bio);
-        $('#git_public_repos').text(data.public_repos);
-        $('#git_public_gists').text(data.public_gists);
-        $('#git_followers').text(data.followers);
-        $('#git_following').text(data.following);
-        $('#git_created_at').text(data.created_at);
-        $('#git_updated_at').text(data.updated_at);
-
-        var $repos = $.getJSON(url + '/repos');
-        $repos.done(function(data) {
-            // console.log(data, data.length);
-            html = '<ul class="list-group">';
-            for (var i = 1; i < data.length; i++) {
-                html += '<li class="list-group-item"><a href="' + data[i].html_url + '">' + data[i].name + '</a></li>';
-            }
-            html += '</ul>';
-            $('#repos .panel-body').html(html);        });
-        $repos.fail(function(err) {
-            console.log('Error!', err);
-        });
-
-        var $subscriptions = $.getJSON(url + '/subscriptions')
-        .done(function(data) {
-            // console.log(data, data.length);
-            html = '<ul class="list-group">';
-            for (var i = 1; i < data.length; i++) {
-                html += '<li class="list-group-item"><a href="' + data[i].html_url + '">' + data[i].full_name + '</a></li>';
-            }
-            html += '</ul>';
-            $('#subscriptions .panel-body').html(html);
-        });
-        $repos.fail(function(err) {
-            console.log('Error!', err);
-        });
-
-        var $followers = $.getJSON(url + '/followers');
-        $followers.done(function(data) {
-            // console.log(data, data.length);
-            html = '<ul class="list-group">';
-            for (var i = 1; i < data.length; i++) {
-                html += '<li class="list-group-item"><a href="' + data[i].html_url + '">' + data[i].login + '</a></li>';
-            }
-            html += '</ul>';
-            $('#followers .panel-body').html(html);
-        });
-        $repos.fail(function(err) {
-            console.log('Error!', err);
-        });
-
-    });
-
-    $xhr.fail(function(err) {
-        console.log('Error!', err);
-    });
+    // Make the request
+    req.send();
+  });
 }
 
+// git username submitted
 $('.btn.btn-default').click(function(){
-    console.log('Name submitted', $('.name').val());
+    // console.log('Name submitted', $('.name').val());
+    $('#error').text(''); // clear any previous errors
     var username = $('.name').val();
-    $('#git_login').show();
-    $('#username').hide();
-    apicall(baseurl + username);
+    getJSON(baseurl + username).then(function(response) {
+        $('#git_login').show();
+        $('#username').hide();
+        $('#git_login a').text(response.login);
+        $('#git_login a').attr('href', response.html_url);
+        $('#git_avatar_url').attr('src', response.avatar_url);
+        $('#git_type').text(response.type);
+        $('#git_name').text(response.name);
+        $('#git_company').text(response.company);
+        $('#git_location').text(response.location);
+        $('#git_email').text(response.email);
+        $('#git_bio').text(response.bio);
+        $('#git_public_repos').text(response.public_repos);
+        $('#git_public_gists').text(response.public_gists);
+        $('#git_followers').text(response.followers);
+        $('#git_following').text(response.following);
+        $('#git_created_at').text(response.created_at);
+        $('#git_updated_at').text(response.updated_at);
+        return response;
+    }, function(error) {
+        $('#error').text('Name not found!');
+  }).then(function(response) {
+
+      getJSON(response.repos_url).then(function(repos) {
+          html = '<ul class="list-group">';
+          for (var i = 1; i < repos.length; i++) {
+              html += '<li class="list-group-item"><a href="' + repos[i].html_url + '">' + repos[i].name + '</a></li>';
+          }
+          html += '</ul>';
+          $('#repos .panel-body').html(html);
+      })
+
+      getJSON(response.followers_url).then(function(followers) {
+          html = '<ul class="list-group">';
+          for (var i = 1; i < followers.length; i++) {
+              html += '<li class="list-group-item"><a href="' + followers[i].html_url + '">' + followers[i].login + '</a></li>';
+          }
+          html += '</ul>';
+          $('#followers .panel-body').html(html);
+      })
+
+      getJSON(response.subscriptions_url).then(function(subscriptions) {
+          html = '<ul class="list-group">';
+          for (var i = 1; i < subscriptions.length; i++) {
+              html += '<li class="list-group-item"><a href="' + subscriptions[i].html_url + '">' + subscriptions[i].full_name + '</a></li>';
+          }
+          html += '</ul>';
+          $('#subscriptions .panel-body').html(html);
+      })
+
+    })
 });
 
+// username edit icon clicked
 $('#git_login .glyphicon.glyphicon-edit').click(function() {
     $('#git_login').hide();
     $('#username').show();
 });
 
+// navigation link clicked
 $('.nav.nav-sidebar li').click(function() {
-    // console.log('Navigation clicked', $(this));
     var nav = $(this).attr('id')
-    // console.log(nav);
 
     if (nav == 'nav-overview') {
         $('.nav.nav-sidebar li').removeClass('active');
@@ -135,11 +138,9 @@ $('.nav.nav-sidebar li').click(function() {
 
 });
 
-// $('#git-username').hide();
+// initialize UI
 $('#git_login').hide();
 $('#overview').show();
 $('#subscriptions').hide();
 $('#followers').hide();
 $('#repos').hide();
-
-// apicall(url);
