@@ -32,6 +32,14 @@ function getJSON(url) {
   });
 }
 
+function htmlLinksList(obj, key, text) {
+    html = '<ul class="list-group">';
+    obj.forEach(function (item) {
+        html += '<li class="list-group-item"><a href="' + item[key] + '">' + item[text] + '</a></li>';
+    });
+    html += '</ul>';
+    return html;
+}
 // git username submitted
 $('.btn.btn-default').click(function(){
     // console.log('Name submitted', $('.name').val());
@@ -60,31 +68,17 @@ $('.btn.btn-default').click(function(){
         $('#error').text('Name not found!');
   }).then(function(response) {
 
-      getJSON(response.repos_url).then(function(repos) {
-          html = '<ul class="list-group">';
-          for (var i = 1; i < repos.length; i++) {
-              html += '<li class="list-group-item"><a href="' + repos[i].html_url + '">' + repos[i].name + '</a></li>';
-          }
-          html += '</ul>';
-          $('#repos .panel-body').html(html);
+      getJSON(response.repos_url).then(function(response) {
+          $('#repos .panel-body').html(htmlLinksList(response, 'html_url', 'name'));
       })
 
-      getJSON(response.followers_url).then(function(followers) {
-          html = '<ul class="list-group">';
-          for (var i = 1; i < followers.length; i++) {
-              html += '<li class="list-group-item"><a href="' + followers[i].html_url + '">' + followers[i].login + '</a></li>';
-          }
-          html += '</ul>';
-          $('#followers .panel-body').html(html);
+      getJSON(response.subscriptions_url).then(function(response) {
+          $('#subscriptions .panel-body').html(htmlLinksList(response, 'html_url', 'full_name'));
       })
 
-      getJSON(response.subscriptions_url).then(function(subscriptions) {
-          html = '<ul class="list-group">';
-          for (var i = 1; i < subscriptions.length; i++) {
-              html += '<li class="list-group-item"><a href="' + subscriptions[i].html_url + '">' + subscriptions[i].full_name + '</a></li>';
-          }
-          html += '</ul>';
-          $('#subscriptions .panel-body').html(html);
+      getJSON(response.followers_url).then(function(response) {
+
+          $('#followers .panel-body').html(htmlLinksList(response, 'html_url', 'login'));
       })
 
     })
