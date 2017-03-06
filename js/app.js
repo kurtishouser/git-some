@@ -1,4 +1,5 @@
 var baseurl = 'https://api.github.com/users/';
+var perPage = 12;
 
 function getJSON(url) {
   // Return a new promise.
@@ -33,7 +34,7 @@ function getJSON(url) {
 }
 
 function htmlLinksList(obj, key, text) {
-    html = '<ul class="list-group">';
+    var html = '<ul class="list-group">';
     obj.forEach(function (item) {
         html += '<li class="list-group-item"><a href="' + item[key] + '">' + item[text] + '</a></li>';
     });
@@ -46,37 +47,41 @@ $('.btn.btn-default').click(function(){
     $('#error').text(''); // clear any previous errors
     var username = $('.name').val();
     getJSON(baseurl + username).then(function(response) {
+
         $('#git_login').show();
         $('#username').hide();
         $('#git_login a').text(response.login);
         $('#git_login a').attr('href', response.html_url);
         $('#git_avatar_url').attr('src', response.avatar_url);
-        $('#git_type').text(response.type);
-        $('#git_name').text(response.name);
-        $('#git_company').text(response.company);
-        $('#git_location').text(response.location);
-        $('#git_email').text(response.email);
-        $('#git_bio').text(response.bio);
-        $('#git_public_repos').text(response.public_repos);
-        $('#git_public_gists').text(response.public_gists);
-        $('#git_followers').text(response.followers);
-        $('#git_following').text(response.following);
-        $('#git_created_at').text(response.created_at);
-        $('#git_updated_at').text(response.updated_at);
+        var html = '';
+        html += '<div><strong>Account Type: </strong>' + response.type + '</div>';
+        html += '<div><strong>Name: </strong>' + response.name + '</div>';
+        html += '<div><strong>Company: </strong>' + response.company + '</div>';
+        html += '<div><strong>Location: </strong>' + response.location + '</div>';
+        html += '<div><strong>Email: </strong>' + response.email + '</div>';
+        html += '<div><strong>Bio: </strong>' + response.bio + '</div>';
+        html += '<div><strong>Public Repos: </strong>' + response.public_repos + '</div>';
+        html += '<div><strong>Public Gists: </strong>' + response.public_gists + '</div>';
+        html += '<div><strong>Followers: </strong>' + response.followers + '</div>';
+        html += '<div><strong>Following: </strong>' + response.following + '</div>';
+        html += '<div><strong>Created: </strong>' + response.created_at + '</div>';
+        html += '<div><strong>Updated: </strong>' + response.updated_at + '</div>';
+        $('#overview .panel-body').html(html);
         return response;
+
     }, function(error) {
         $('#error').text('Name not found!');
   }).then(function(response) {
 
-      getJSON(response.repos_url).then(function(response) {
+      getJSON(response.repos_url + '?per_page=' + perPage).then(function(response) {
           $('#repos .panel-body').html(htmlLinksList(response, 'html_url', 'name'));
       })
 
-      getJSON(response.subscriptions_url).then(function(response) {
+      getJSON(response.subscriptions_url + '?per_page=' + perPage).then(function(response) {
           $('#subscriptions .panel-body').html(htmlLinksList(response, 'html_url', 'full_name'));
       })
 
-      getJSON(response.followers_url).then(function(response) {
+      getJSON(response.followers_url + '?per_page=' + perPage).then(function(response) {
 
           $('#followers .panel-body').html(htmlLinksList(response, 'html_url', 'login'));
       })
@@ -133,8 +138,16 @@ $('.nav.nav-sidebar li').click(function() {
 });
 
 // initialize UI
-$('#git_login').hide();
-$('#overview').show();
-$('#subscriptions').hide();
-$('#followers').hide();
-$('#repos').hide();
+// $('#git_login').hide();
+// $('#overview').show();
+// $('#subscriptions').hide();
+// $('#followers').hide();
+// $('#repos').hide();
+// $('#details').hide();
+
+// console.log('- tinkering... -');
+// getJSON(baseurl + 'kurtishouser').then(function(overview) {
+//     return getJSON(overview.repos_url);
+// }).then(function(repos) {
+//     console.log("Got Repos!", repos);
+// })

@@ -34,17 +34,17 @@
     </nav>
 
     <div class="container-fluid">
+
         <div class="row">
 
             <div class="col-sm-3 col-md-2 sidebar">
                 <img id="git_avatar_url" src="img/octocat.svg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
                 <div id="username" class="input-group">
-                    <input type="text" class="form-control name" name="name" placeholder="Git Username" aria-describedby="sizing-addon1">
-                        <!-- <input type="submit" value="Go"> -->
+                    <input type="text" class="form-control name" name="name" placeholder="GitHub Username" aria-describedby="sizing-addon1">
                     <button type="button" class="btn btn-default">Go</button>
                     <div id="error"></div>
                 </div>
-                <h4 id="git_login"><a href="#" target="_blank"/></a><span class="glyphicon glyphicon-edit" aria-hidden=true></span></h4>
+                <h4 id="git_login" style="display:none;"><a href="#" target="_blank"/></a><span class="glyphicon glyphicon-edit" aria-hidden=true></span></h4>
                 <hr />
                 <ul class="nav nav-sidebar">
                     <li id="nav-overview" class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
@@ -54,61 +54,39 @@
                 </ul>
             </div>
 
-            <div id="details">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-                <div id="overview" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div id="overview">
                     <h1 class="page-header">Overview</h1>
-
                     <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div>Account Type: <span id="git_type"></span></div>
-                            <div>Name: <span id="git_name"></span></div>
-                            <div>Company: <span id="git_company"></span></div>
-                            <div>Blog: <span id="git_blog"></span></div>
-                            <div>Location: <span id="git_location"></span></div>
-                            <div>Email: <span id="git_email"></span></div>
-                            <div>Bio: <span id="git_bio"></span></div>
-                            <div>Public Repos: <span id="git_public_repos"></span></div>
-                            <div>Public Gists: <span id="git_public_gists"></span></div>
-                            <div>Followers: <span id="git_followers"></span></div>
-                            <div>Following: <span id="git_following"></span></div>
-                            <div>Created: <span id="git_created_at"></span></div>
-                            <div>Updated: <span id="git_updated_at"></span></div>
-                        </div>
+                        <div class="panel-body">Enter a GitHub username</div>
                     </div>
                 </div>
 
-                <div id="repos" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div id="repos" style="display:none;">
                     <h1 class="page-header">Repos</h1>
-
                     <div class="panel panel-default">
-                        <div class="panel-body"></div>
+                        <div class="panel-body">Enter a GitHub username</div>
                     </div>
-
                 </div>
 
-                <div id="subscriptions" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div id="subscriptions" style="display:none;">
                     <h1 class="page-header">Subscriptions</h1>
-
                     <div class="panel panel-default">
-                        <div class="panel-body"></div>
+                        <div class="panel-body">Enter a GitHub username</div>
                     </div>
-
                 </div>
 
-                <div id="followers" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div id="followers" style="display:none;">
                     <h1 class="page-header">Followers</h1>
-
                     <div class="panel panel-default">
-                        <div class="panel-body"></div>
+                        <div class="panel-body">Enter a GitHub username</div>
                     </div>
-
                 </div>
 
             </div>
 
         </div>
-
 
     </div>
 
