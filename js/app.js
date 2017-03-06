@@ -106,27 +106,21 @@ $('.nav.nav-sidebar li').click(function() {
         $('#followers').hide();
         $('#repos').hide();
         $('#overview').show();
-    }
-
-    if (nav == 'nav-repos') {
+    } else if (nav == 'nav-repos') {
         $('.nav.nav-sidebar li').removeClass('active');
         $('#'+nav).addClass('active');
         $('#overview').hide();
         $('#subscriptions').hide();
         $('#followers').hide();
         $('#repos').show();
-    }
-
-    if (nav == 'nav-subscriptions') {
+    } else if (nav == 'nav-subscriptions') {
         $('.nav.nav-sidebar li').removeClass('active');
         $('#'+nav).addClass('active');
         $('#overview').hide();
         $('#repos').hide();
         $('#followers').hide();
         $('#subscriptions').show();
-    }
-
-    if (nav == 'nav-followers') {
+    } else if (nav == 'nav-followers') {
         $('.nav.nav-sidebar li').removeClass('active');
         $('#'+nav).addClass('active');
         $('#overview').hide();
@@ -136,18 +130,3 @@ $('.nav.nav-sidebar li').click(function() {
     }
 
 });
-
-// initialize UI
-// $('#git_login').hide();
-// $('#overview').show();
-// $('#subscriptions').hide();
-// $('#followers').hide();
-// $('#repos').hide();
-// $('#details').hide();
-
-// console.log('- tinkering... -');
-// getJSON(baseurl + 'kurtishouser').then(function(overview) {
-//     return getJSON(overview.repos_url);
-// }).then(function(repos) {
-//     console.log("Got Repos!", repos);
-// })
