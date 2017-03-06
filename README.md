@@ -1,4 +1,4 @@
-# GitHub API!
+# Git Some!
 
 Exploring the GitHub API.
 
