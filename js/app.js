@@ -51,6 +51,20 @@ function accountDetails(response) {
     return html;
 }
 
+function repoDetails(response) {
+    var html = '';
+    html += '<div><strong>Name: </strong>' + response.name + '</div>';
+    html += '<div><strong>Description: </strong>' + response.description + '</div>';
+    html += '<div><strong>Home Page: </strong>' + response.homepage + '</div>';
+    html += '<div><strong>Language: </strong>' + response.language + '</div>';
+    html += '<div><strong>Subscribers: </strong>' + response.subscribers_count + '</div>';
+    html += '<div><strong>Watchers: </strong>' + response.watchers_count + '</div>';
+    html += '<div><strong>Forks: </strong>' + response.forks_count + '</div>';
+    html += '<div><strong>Created: </strong>' + response.created_at + '</div>';
+    html += '<div><strong>Updated: </strong>' + response.updated_at + '</div>';
+    return html;
+}
+
 // not used anymore but may be useful later
 function htmlLinksList(obj, key, text) {
     var html = '<ul class="list-group">';
@@ -97,7 +111,7 @@ $('.btn.btn-default').click(function(){
               getJSON(baseurl + 'repos/' + username + '/' + item).then(function(response) {
                   $('#repos .panel.panel-info').show();
                   $('#repos .panel.panel-info .panel-title').text('Details for ' + response.name);
-                  $('#repos .panel.panel-info .panel-body').text(response.description);
+                  $('#repos .panel.panel-info .panel-body').html(repoDetails(response));
               })
           })
       })
@@ -109,7 +123,7 @@ $('.btn.btn-default').click(function(){
               getJSON(baseurl + 'repos/' + item).then(function(response) {
                   $('#subscriptions .panel.panel-info').show();
                   $('#subscriptions .panel.panel-info .panel-title').text('Details for ' + response.full_name);
-                  $('#subscriptions .panel.panel-info .panel-body').text(response.description);
+                  $('#subscriptions .panel.panel-info .panel-body').html(repoDetails(response));
               })
           })
       })
