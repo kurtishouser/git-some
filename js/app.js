@@ -51,6 +51,7 @@ function accountDetails(response) {
     return html;
 }
 
+// not used anymore but may be useful later
 function htmlLinksList(obj, key, text) {
     var html = '<ul class="list-group">';
     obj.forEach(function (item) {
@@ -60,7 +61,7 @@ function htmlLinksList(obj, key, text) {
     return html;
 }
 
-function htmlGrid(obj, key, text) {
+function objItemsGrid(obj, key, text) {
     var html = '<div class="row">';
     obj.forEach(function (item) {
         html += '<div class="col-md-4 item">' + item[text] + '</div>';
@@ -69,11 +70,12 @@ function htmlGrid(obj, key, text) {
     return html;
 }
 
-// git username submitted
+// GitHub username submitted
 $('.btn.btn-default').click(function(){
     $('#error').text(''); // clear any previous errors
-    $('.panel.panel-info').hide();
+    $('.panel.panel-info').hide(); // hide any Details panel if visible
     var username = $('.name').val();
+
     getJSON(baseurl + 'users/' + username).then(function(response) {
 
         $('#git_login').show();
@@ -89,7 +91,7 @@ $('.btn.btn-default').click(function(){
   }).then(function(response) {
 
       getJSON(response.repos_url + '?per_page=' + perPage).then(function(response) {
-          $('#repos .panel.panel-primary .panel-body').html(htmlGrid(response, 'html_url', 'name'));
+          $('#repos .panel.panel-primary .panel-body').html(objItemsGrid(response, 'html_url', 'name'));
           $('#repos .panel-body .item').click(function() {
               var item = $(this).text();
               getJSON(baseurl + 'repos/' + username + '/' + item).then(function(response) {
@@ -101,7 +103,7 @@ $('.btn.btn-default').click(function(){
       })
 
       getJSON(response.subscriptions_url + '?per_page=' + perPage).then(function(response) {
-          $('#subscriptions .panel.panel-primary .panel-body').html(htmlGrid(response, 'html_url', 'full_name'));
+          $('#subscriptions .panel.panel-primary .panel-body').html(objItemsGrid(response, 'html_url', 'full_name'));
           $('#subscriptions .panel-body .item').click(function() {
               var item = $(this).text();
               getJSON(baseurl + 'repos/' + item).then(function(response) {
@@ -113,8 +115,7 @@ $('.btn.btn-default').click(function(){
       })
 
       getJSON(response.followers_url + '?per_page=' + perPage).then(function(response) {
-
-          $('#followers .panel.panel-primary .panel-body').html(htmlGrid(response, 'html_url', 'login'));
+          $('#followers .panel.panel-primary .panel-body').html(objItemsGrid(response, 'html_url', 'login'));
           $('#followers .panel-body .item').click(function() {
               var item = $(this).text();
               getJSON(baseurl + 'users/' + item).then(function(response) {
@@ -136,36 +137,9 @@ $('#git_login .glyphicon.glyphicon-edit').click(function() {
 
 // navigation link clicked
 $('.nav.nav-sidebar li').click(function() {
-    var nav = $(this).attr('id')
-
-    if (nav == 'nav-overview') {
-        $('.nav.nav-sidebar li').removeClass('active');
-        $('#'+nav).addClass('active');
-        $('#subscriptions').hide();
-        $('#followers').hide();
-        $('#repos').hide();
-        $('#overview').show();
-    } else if (nav == 'nav-repos') {
-        $('.nav.nav-sidebar li').removeClass('active');
-        $('#'+nav).addClass('active');
-        $('#overview').hide();
-        $('#subscriptions').hide();
-        $('#followers').hide();
-        $('#repos').show();
-    } else if (nav == 'nav-subscriptions') {
-        $('.nav.nav-sidebar li').removeClass('active');
-        $('#'+nav).addClass('active');
-        $('#overview').hide();
-        $('#repos').hide();
-        $('#followers').hide();
-        $('#subscriptions').show();
-    } else if (nav == 'nav-followers') {
-        $('.nav.nav-sidebar li').removeClass('active');
-        $('#'+nav).addClass('active');
-        $('#overview').hide();
-        $('#subscriptions').hide();
-        $('#repos').hide();
-        $('#followers').show();
-    }
-
+    var navSelection = $(this).attr('id');
+    $('.nav.nav-sidebar li').removeClass('active');
+    $('#' + navSelection).addClass('active');
+    $('.page').hide();
+    $('#' + navSelection.slice(4)).show(); // remove 'nav-'
 });
