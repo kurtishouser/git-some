@@ -61,10 +61,10 @@ function htmlLinksList(obj, key, text) {
     return html;
 }
 
-function objItemsGrid(obj, key, text) {
+function objItemsGrid(obj, key) {
     var html = '<div class="row">';
     obj.forEach(function (item) {
-        html += '<div class="col-md-4 item">' + item[text] + '</div>';
+        html += '<div class="col-md-4 item">' + item[key] + '</div>';
     });
     html += '</div>';
     return html;
@@ -91,7 +91,7 @@ $('.btn.btn-default').click(function(){
   }).then(function(response) {
 
       getJSON(response.repos_url + '?per_page=' + perPage).then(function(response) {
-          $('#repos .panel.panel-primary .panel-body').html(objItemsGrid(response, 'html_url', 'name'));
+          $('#repos .panel.panel-primary .panel-body').html(objItemsGrid(response, 'name'));
           $('#repos .panel-body .item').click(function() {
               var item = $(this).text();
               getJSON(baseurl + 'repos/' + username + '/' + item).then(function(response) {
@@ -103,7 +103,7 @@ $('.btn.btn-default').click(function(){
       })
 
       getJSON(response.subscriptions_url + '?per_page=' + perPage).then(function(response) {
-          $('#subscriptions .panel.panel-primary .panel-body').html(objItemsGrid(response, 'html_url', 'full_name'));
+          $('#subscriptions .panel.panel-primary .panel-body').html(objItemsGrid(response, 'full_name'));
           $('#subscriptions .panel-body .item').click(function() {
               var item = $(this).text();
               getJSON(baseurl + 'repos/' + item).then(function(response) {
@@ -114,8 +114,20 @@ $('.btn.btn-default').click(function(){
           })
       })
 
+      getJSON(response.following_url.slice(0, -13) + '?per_page=' + perPage).then(function(response) {
+          $('#following .panel.panel-primary .panel-body').html(objItemsGrid(response, 'login'));
+          $('#following .panel-body .item').click(function() {
+              var item = $(this).text();
+              getJSON(baseurl + 'users/' + item).then(function(response) {
+                  $('#following .panel.panel-info').show();
+                  $('#following .panel.panel-info .panel-title').text('Details for ' + response.login);
+                  $('#following .panel.panel-info .panel-body').html(accountDetails(response));
+              })
+          })
+      })
+
       getJSON(response.followers_url + '?per_page=' + perPage).then(function(response) {
-          $('#followers .panel.panel-primary .panel-body').html(objItemsGrid(response, 'html_url', 'login'));
+          $('#followers .panel.panel-primary .panel-body').html(objItemsGrid(response, 'login'));
           $('#followers .panel-body .item').click(function() {
               var item = $(this).text();
               getJSON(baseurl + 'users/' + item).then(function(response) {
