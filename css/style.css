@@ -2,8 +2,10 @@
     padding-left: 10px;
     font-size: .75em;
 }
-
 #git_avatar_url {
     margin-bottom: 10px;
     border-radius: 50%;
+}
+.panel-primary .col-md-4 {
+    padding: 5px 15px;
 }
